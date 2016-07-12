@@ -13,8 +13,31 @@ let dataSourceURL = NSURL(string:"http://www.raywenderlich.com/downloads/Classic
 
 class ListViewController: UITableViewController {
   
-  lazy var photos = NSDictionary(contentsOfURL:dataSourceURL!)!
-  
+  var photos = [PhotoRecord]()
+    let pendingOperations = PendingOperations()
+    
+    //private methods
+    
+    func fetchPhotoDetails() {
+        
+        let request = NSURLRequest(URL: dataSourceURL!)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
+            
+            if data != nil {
+                
+                let datasourceDictionary = NSPropertyListSerialization.propertyListWithData(data!, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil) as! Dictionary
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    //ViewController lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
